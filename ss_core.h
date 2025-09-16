@@ -20,12 +20,6 @@ void ss_exec_bin(const char *command);
 void ss_exec(const char *command);
 
 /**
-    * @brief read user input from stdin 
-    * @return char* a string containig user commmand or NULL
- */ 
-char *ss_read_line(void);
-
-/**
     * @brief main loop of siShell, read from stdin, parse the input and execute 
     * the command
     * @param ss_info the struct containig siShell info

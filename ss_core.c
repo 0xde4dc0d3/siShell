@@ -5,6 +5,10 @@
 #include "ss_core.h"
 #include "ss_builtin.h"
 #include "ss_visual.h"
+#include "ss_utils.h"
+
+// TODO: ss_launch with fork() and wait()
+// TODO: parsing stdin_line
 
 /**
     * @brief Execute a command located in /bin directory
@@ -15,8 +19,7 @@ void ss_exec_bin(const char *command) {
     snprintf(path, sizeof(path), "/bin/%s", command);
 
     if (execl(path, command, (char*)((void*)0)) == -1) {
-        perror("Execl error");
-        exit(EXIT_FAILURE);
+        perror("Execl error (no commmand found)");
     }
 }
 
@@ -25,6 +28,7 @@ void ss_exec_bin(const char *command) {
     * @param command the command entered by the user
     FIXME: need a better implementation of this, using wait() and fork() to spawn a 
     new process when a command is called
+    This is good, it needs to be put inside ss_launch. Watch out for the exit()
 */
 void ss_exec(const char *command) {
     if (command == NULL) {
@@ -34,25 +38,6 @@ void ss_exec(const char *command) {
     int idx = ss_is_builtin(command);
     if (idx != -1) (*ss_builtin_func[idx])();
     else ss_exec_bin(command);
-}
-
-/**
-    * @brief read user input from stdin 
-    * @return char* a string containig user commmand or NULL
- */ 
-char *ss_read_line(void) {
-    char *stdin_line = NULL;
-    size_t ss_stdin_line_len = SS_STDIN_LINE_LEN;
-    
-    if (getline(&stdin_line, &ss_stdin_line_len, stdin) == -1) {
-        if (feof(stdin)) {
-            exit(EXIT_SUCCESS);
-        } else {
-            perror("getline error");
-            exit(EXIT_FAILURE);
-        }
-    }
-    return stdin_line;
 }
 
 /**
