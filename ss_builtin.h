@@ -17,6 +17,8 @@ extern const char *ss_builtin[];
     * TODO: for now cat and echo
 */
 void ss_ls(void);
+void ss_clear(void);
+void ss_exit(void);
 
 /** 
     * @brief array of bultin functions

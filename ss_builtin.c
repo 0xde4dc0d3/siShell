@@ -6,8 +6,8 @@
 #include <sys/stat.h>
 #include "ss_builtin.h"
 
-const char *ss_builtin[] = {"ls"};
-void (*ss_builtin_func[])(void) = {ss_ls};
+const char *ss_builtin[] = {"ls", "clear", "exit"};
+void (*ss_builtin_func[])(void) = {ss_ls, ss_clear, ss_exit};
 
 /**
     * @brief check if a command is or not a builtin command
@@ -92,4 +92,18 @@ void ss_ls() {
         }
     }
     closedir(dir);
+}
+
+/** 
+    * @brief siShell clear from scratch
+*/
+void ss_clear(void) {
+    printf("\x1b[3J\x1b[H\x1b[2J");
+}
+
+/** 
+    * @brief siShell exit from scratch
+*/
+void ss_exit(void) {
+    exit(EXIT_SUCCESS);
 }
