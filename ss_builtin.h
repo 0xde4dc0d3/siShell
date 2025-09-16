@@ -2,8 +2,8 @@
 #define SS_BUILTIN_H
 
 /**
- * This header file contains all the variables and functions related
- * to the builtin commands of the siShell.
+    * This header file contains all the variables and functions related
+    * to the builtin commands of the siShell.
 */
 
 /**

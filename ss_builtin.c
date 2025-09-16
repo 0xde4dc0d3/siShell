@@ -7,7 +7,7 @@
 #include "ss_builtin.h"
 
 const char *ss_builtin[] = {"ls"};
-void (*ss_builtin_func[])(void) = {&ss_ls};
+void (*ss_builtin_func[])(void) = {ss_ls};
 
 /**
     * @brief check if a command is or not a builtin command
