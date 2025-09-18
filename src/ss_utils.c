@@ -5,7 +5,7 @@
 
 /**
     * @brief retrive only the name of the current dir, used in ss_display_prompt
-    * @param *ss_info the struct containing all the siShell info
+    * @param ss_info the struct containing all the siShell info
     FIXME: I think all this can be done in the while loop, I'm too lazy now
  */
 char *ss_get_cwd_name(SS_INFO ss_info) {
