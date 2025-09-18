@@ -1,6 +1,6 @@
 CC		= gcc
 CFLAGS	= -g -o
-SRC		= *.c
+SRC		= src/*.c
 TARGET	= siShell
 
 $(TARGET):
