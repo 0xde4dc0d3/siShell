@@ -1,5 +1,6 @@
 #ifndef SS_BUILTIN_H
 #define SS_BUILTIN_H
+#include "ss_visual.h"
 
 /**
     * This header file contains all the variables and functions related
@@ -16,9 +17,10 @@ extern const char *ss_builtin[];
     * @brief list of functions for siShell's builtin commands
     * TODO: for now cat and echo
 */
-void ss_ls(void);
-void ss_clear(void);
-void ss_exit(void);
+void ss_ls(void *arg);
+void ss_clear(void *arg);
+void ss_exit(void *arg);
+void ss_whoami(void *arg);
 
 /** 
     * @brief array of bultin functions
@@ -27,7 +29,7 @@ void ss_exit(void);
     * ss_builtin_func[]: an array of this pointers
     * &ss_funcion_name: the address of the function
 */
-extern void (*ss_builtin_func[])(void);
+extern void (*ss_builtin_func[])(void *arg);
 
 /**
     * @brief check if a command is or not a builtin command

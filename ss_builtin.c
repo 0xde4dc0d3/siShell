@@ -4,10 +4,12 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <sys/stat.h>
+#include <pwd.h>
 #include "ss_builtin.h"
+#include "ss_visual.h"
 
-const char *ss_builtin[] = {"ls", "clear", "exit"};
-void (*ss_builtin_func[])(void) = {ss_ls, ss_clear, ss_exit};
+const char *ss_builtin[] = {"ls", "clear", "exit", "whoami"};
+void (*ss_builtin_func[])(void *arg) = {ss_ls, ss_clear, ss_exit, ss_whoami};
 
 /**
     * @brief check if a command is or not a builtin command
@@ -23,7 +25,7 @@ int ss_is_builtin(const char *command) {
 /** 
     * @brief siShell ls from scratch
 */
-void ss_ls() {
+void ss_ls(void *arg) {
     struct dirent   *de;
     struct stat     file_stat;
 
@@ -92,18 +94,29 @@ void ss_ls() {
         }
     }
     closedir(dir);
+    (void)arg;
 }
 
 /** 
     * @brief siShell clear from scratch
 */
-void ss_clear(void) {
+void ss_clear(void *arg) {
     printf("\x1b[3J\x1b[H\x1b[2J");
+    (void)arg;
 }
 
 /** 
     * @brief siShell exit from scratch
 */
-void ss_exit(void) {
+void ss_exit(void *arg) {
     exit(EXIT_SUCCESS);
+    (void)arg;
+}
+
+/** 
+    * @brief siShell whoami from scratch
+*/
+void ss_whoami(void *arg) {
+    SS_INFO *s = (SS_INFO*)arg;
+    printf("%s\n", s->pw->pw_name);
 }
