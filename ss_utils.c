@@ -8,17 +8,17 @@
     * @param *ss_info the struct containing all the siShell info
     FIXME: I think all this can be done in the while loop, I'm too lazy now
  */
-char *ss_get_cwd_name(SS_INFO *ss_info) {
-    int idx = (int)strlen(ss_info->abs_cwd);
+char *ss_get_cwd_name(SS_INFO ss_info) {
+    int idx = (int)strlen(ss_info.abs_cwd);
     int count = 0;
     char *cwd_name = (char*)malloc(64);
     if (!cwd_name) {
         perror("ss_get_cwd_name malloc error");
         exit(EXIT_FAILURE);
     }
-    while (ss_info->abs_cwd[--idx] != '/') count++;
+    while (ss_info.abs_cwd[--idx] != '/') count++;
     for (int i = 0; i < count; ++i) {
-        cwd_name[i] = ss_info->abs_cwd[(idx+1)+i];
+        cwd_name[i] = ss_info.abs_cwd[(idx+1)+i];
     }
     return cwd_name;
 }

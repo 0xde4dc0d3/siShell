@@ -30,8 +30,8 @@ void ss_init(SS_INFO *ss_info) {
     }
 
     char *cwd = NULL;
-    cwd = ss_get_cwd_name(ss_info);
-    if (ss_get_cwd_name(ss_info) == NULL) {
+    cwd = ss_get_cwd_name(*ss_info);
+    if (ss_get_cwd_name(*ss_info) == NULL) {
         fprintf(stderr, "Cannot retrive cwd name.\n");
         strncpy(ss_info->cwd_name, "NULL", sizeof(ss_info->cwd_name));
     } else {
