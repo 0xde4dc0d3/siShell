@@ -10,7 +10,7 @@
     * @param *ss_info the struct containing all the siShell info
     FIXME: I think all this can be done in the while loop, I'm too lazy now
  */
-void ss_get_cwd_name(SS_INFO *ss_info);
+char *ss_get_cwd_name(SS_INFO *ss_info);
 
 /**
     * @brief read user input from stdin 

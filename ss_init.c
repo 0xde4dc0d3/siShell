@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pwd.h>
+#include <string.h>
 #include <unistd.h>
 #include "ss_init.h"
 #include "ss_utils.h"
@@ -27,5 +28,13 @@ void ss_init(SS_INFO *ss_info) {
         perror("getcwd error");
         exit(EXIT_FAILURE);
     }
-    ss_get_cwd_name(ss_info);
+
+    char *cwd = NULL;
+    cwd = ss_get_cwd_name(ss_info);
+    if (ss_get_cwd_name(ss_info) == NULL) {
+        fprintf(stderr, "Cannot retrive cwd name.\n");
+        strncpy(ss_info->cwd_name, "NULL", sizeof(ss_info->cwd_name));
+    } else {
+        strncpy(ss_info->cwd_name, cwd, sizeof(ss_info->cwd_name));
+    }
 }
