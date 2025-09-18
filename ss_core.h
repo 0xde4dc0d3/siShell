@@ -17,7 +17,7 @@ void ss_exec_bin(const char *command);
     FIXME: need a better implementation of this, using wait() and fork() to spawn a 
     new process when a command is called
 */
-void ss_exec(const char *command);
+void ss_exec(const char *command, SS_INFO ss_info);
 
 /**
     * @brief main loop of siShell, read from stdin, parse the input and execute 

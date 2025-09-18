@@ -26,18 +26,24 @@ void ss_exec_bin(const char *command) {
 /**
     * @brief check for the command, if it exists, nature then execute it 
     * @param command the command entered by the user
+    * @param ss_info the struct containig all siShell infos
     FIXME: need a better implementation of this, using wait() and fork() to spawn a 
     new process when a command is called
-    This is good, it needs to be put inside ss_launch. Watch out for the exit()
+    It needs to be put inside ss_launch. Watch out for the exit()
 */
-void ss_exec(const char *command) {
+void ss_exec(const char *command, SS_INFO ss_info) {
     if (command == NULL) {
         fprintf(stderr, "Command cannot be null.\n");
         exit(EXIT_FAILURE);
     }
     int idx = ss_is_builtin(command);
-    if (idx != -1) (*ss_builtin_func[idx])();
-    else ss_exec_bin(command);
+    if (idx != -1) {
+        // If the command require SS_INFO struct
+        if (strcmp(command, "whoami") == 0) (*ss_builtin_func[idx])(&ss_info);
+        else (*ss_builtin_func[idx])(((void*)0));
+    } else {
+        ss_exec_bin(command);
+    }
 }
 
 /**
@@ -51,6 +57,6 @@ void ss_loop(SS_INFO ss_info) {
         ss_display_prompt(ss_info);
         stdin_line = ss_read_line();
         stdin_line[strlen(stdin_line) - 1] = 0;
-        ss_exec(stdin_line);
+        ss_exec(stdin_line, ss_info);
     } while (1);
 }
