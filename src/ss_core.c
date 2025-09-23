@@ -13,7 +13,8 @@ void ss_exec_bin(const char *command) {
     snprintf(path, sizeof(path), "/bin/%s", command);
 
     if (execl(path, command, (char*)((void*)0)) == -1) {
-        perror("Specified command do not exists / blank command");
+        int idx = get_closest_one(command);
+        fprintf(stderr, "Command do not exists, did you mean '%s'?\n", ss_builtin[idx]);
     }
 }
 
