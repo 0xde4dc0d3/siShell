@@ -20,6 +20,10 @@ void ss_exec_bin(const char *command);
 void ss_exec(const char *command, SS_INFO ss_info);
 
 /**
+*/
+void ss_launch(const char *command, SS_INFO ss_info);
+
+/**
     * @brief main loop of siShell, read from stdin, parse the input and execute 
     * the command
     * @param ss_info the struct containig siShell info

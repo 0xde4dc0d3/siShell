@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 #include "ss_core.h"
 #include "ss_builtin.h"
 #include "ss_visual.h"
 #include "ss_utils.h"
 
-// TODO: ss_launch with fork() and wait()
 // TODO: parsing stdin_line
 
 /**
@@ -19,7 +19,29 @@ void ss_exec_bin(const char *command) {
     snprintf(path, sizeof(path), "/bin/%s", command);
 
     if (execl(path, command, (char*)((void*)0)) == -1) {
-        perror("Execl error (no commmand found)");
+        perror("Specified command do not exists");
+    }
+}
+
+/**
+    * @brief create a new process to execute the command
+    * @param command the command specified by the user
+    * @param ss_info the struct containig all the siShell info
+    * FIXME: if we for example exectue 'cat' for now the program stay in a loop,
+    *           if we interrupt this loop with Ctrl-c the program ends
+    *           Need to handle interrupts.
+*/ 
+void ss_launch(const char *command, SS_INFO ss_info) {
+    pid_t pid;
+    
+    pid = fork();
+    if (pid == -1) {
+        perror("fork error");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        ss_exec(command, ss_info);
+    } else {
+        waitpid(pid, NULL, 0);
     }
 }
 
@@ -57,6 +79,6 @@ void ss_loop(SS_INFO ss_info) {
         ss_display_prompt(ss_info);
         stdin_line = ss_read_line();
         stdin_line[strlen(stdin_line) - 1] = 0;
-        ss_exec(stdin_line, ss_info);
+        ss_launch(stdin_line, ss_info);
     } while (1);
 }
