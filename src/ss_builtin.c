@@ -11,20 +11,12 @@
 const char *ss_builtin[] = {"ls", "clear", "exit", "whoami"};
 void (*ss_builtin_func[])(void *arg) = {ss_ls, ss_clear, ss_exit, ss_whoami};
 
-/**
-    * @brief check if a command is or not a builtin command
-    * @param command the command entered by the user
-    * @return i (builtin command idx in the array) -1 (not a builtin command)
-*/
 int ss_is_builtin(const char *command) {
     for (int i = 0; i < SS_BUILTIN_LEN; ++i)
         if (strcmp(command, ss_builtin[i]) == 0) return i;
     return -1;
 }
 
-/** 
-    * @brief siShell ls from scratch
-*/
 void ss_ls(void *arg) {
     struct dirent   *de;
     struct stat     file_stat;
@@ -97,25 +89,16 @@ void ss_ls(void *arg) {
     (void)arg;
 }
 
-/** 
-    * @brief siShell clear from scratch
-*/
 void ss_clear(void *arg) {
     printf("\x1b[3J\x1b[H\x1b[2J");
     (void)arg;
 }
 
-/** 
-    * @brief siShell exit from scratch
-*/
 void ss_exit(void *arg) {
     exit(EXIT_SUCCESS);
     (void)arg;
 }
 
-/** 
-    * @brief siShell whoami from scratch
-*/
 void ss_whoami(void *arg) {
     SS_INFO *s = (SS_INFO*)arg;
     printf("%s\n", s->pw->pw_name);

@@ -10,10 +10,6 @@
 
 // TODO: parsing stdin_line
 
-/**
-    * @brief Execute a command located in /bin directory
-    * @param command the command specified by the user 
-*/
 void ss_exec_bin(const char *command) {
     char path[256];
     snprintf(path, sizeof(path), "/bin/%s", command);
@@ -23,14 +19,6 @@ void ss_exec_bin(const char *command) {
     }
 }
 
-/**
-    * @brief create a new process to execute the command
-    * @param command the command specified by the user
-    * @param ss_info the struct containig all the siShell info
-    * FIXME: if we for example exectue 'cat' for now the program stay in a loop,
-    *           if we interrupt this loop with Ctrl-c the program ends
-    *           Need to handle interrupts.
-*/ 
 void ss_launch(const char *command, SS_INFO ss_info) {
     pid_t pid;
     
@@ -45,14 +33,6 @@ void ss_launch(const char *command, SS_INFO ss_info) {
     }
 }
 
-/**
-    * @brief check for the command, if it exists, nature then execute it 
-    * @param command the command entered by the user
-    * @param ss_info the struct containig all siShell infos
-    FIXME: need a better implementation of this, using wait() and fork() to spawn a 
-    new process when a command is called
-    It needs to be put inside ss_launch. Watch out for the exit()
-*/
 void ss_exec(const char *command, SS_INFO ss_info) {
     if (command == NULL) {
         fprintf(stderr, "Command cannot be null.\n");
@@ -68,11 +48,6 @@ void ss_exec(const char *command, SS_INFO ss_info) {
     }
 }
 
-/**
-    * @brief main loop of siShell, read from stdin, parse the input and execute 
-    * the command
-    * @param ss_info the struct containig siShell info
-*/ 
 void ss_loop(SS_INFO ss_info) {
     char *stdin_line = NULL;
     do {
