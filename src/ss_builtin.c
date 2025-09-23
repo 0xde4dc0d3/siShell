@@ -9,6 +9,8 @@
 #include "ss_visual.h"
 
 const char *ss_builtin[] = {"ls", "clear", "exit", "whoami"};
+const int SS_BUILTIN_LEN = (sizeof(ss_builtin)/sizeof(char*));
+
 void (*ss_builtin_func[])(void *arg) = {ss_ls, ss_clear, ss_whoami};
 
 int ss_is_builtin(const char *command) {

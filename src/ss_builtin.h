@@ -11,7 +11,7 @@
     * @brief builtin commands list and relative list lenght
 */
 extern const char *ss_builtin[];
-#define SS_BUILTIN_LEN (sizeof(ss_builtin)/sizeof(char*))
+extern const int SS_BUILTIN_LEN;
 
 #define SS_EXIT "exit"
 
