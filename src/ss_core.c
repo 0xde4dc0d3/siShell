@@ -8,14 +8,12 @@
 #include "ss_visual.h"
 #include "ss_utils.h"
 
-// TODO: parsing stdin_line
-
 void ss_exec_bin(const char *command) {
     char path[256];
     snprintf(path, sizeof(path), "/bin/%s", command);
 
     if (execl(path, command, (char*)((void*)0)) == -1) {
-        perror("Specified command do not exists");
+        perror("Specified command do not exists / blank command");
     }
 }
 
@@ -27,9 +25,14 @@ void ss_launch(const char *command, SS_INFO ss_info) {
         perror("fork error");
         exit(EXIT_FAILURE);
     } else if (pid == 0) {
+        // The child execute the command then terminate
         ss_exec(command, ss_info);
+        exit(EXIT_SUCCESS);
     } else {
-        waitpid(pid, NULL, 0);
+        if (waitpid(pid, ((void*)0), 0) == -1) {
+            perror("waitpid error");
+            exit(EXIT_FAILURE);
+        }
     }
 }
 
@@ -40,7 +43,7 @@ void ss_exec(const char *command, SS_INFO ss_info) {
     }
     int idx = ss_is_builtin(command);
     if (idx != -1) {
-        // If the command require SS_INFO struct
+        // If the builint command requires SS_INFO struct
         if (strcmp(command, "whoami") == 0) (*ss_builtin_func[idx])(&ss_info);
         else (*ss_builtin_func[idx])(((void*)0));
     } else {
@@ -54,6 +57,7 @@ void ss_loop(SS_INFO ss_info) {
         ss_display_prompt(ss_info);
         stdin_line = ss_read_line();
         stdin_line[strlen(stdin_line) - 1] = 0;
+        if (strncmp(stdin_line, SS_EXIT, sizeof(SS_EXIT)) == 0) exit(EXIT_SUCCESS);
         ss_launch(stdin_line, ss_info);
     } while (1);
 }
