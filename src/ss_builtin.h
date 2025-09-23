@@ -13,13 +13,14 @@
 extern const char *ss_builtin[];
 #define SS_BUILTIN_LEN (sizeof(ss_builtin)/sizeof(char*))
 
+#define SS_EXIT "exit"
+
 /**
     * @brief list of functions for siShell's builtin commands
     * TODO: for now cat and echo
 */
 void ss_ls(void *arg);
 void ss_clear(void *arg);
-void ss_exit(void *arg);
 void ss_whoami(void *arg);
 
 /** 
