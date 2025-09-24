@@ -78,6 +78,11 @@ int levenshtein_distance(const char *str_1, const char *str_2) {
 }
 
 int get_closest_one(const char *str) {
+    if (!str) {
+        fprintf(stderr, "String cannot be null.");
+        exit(EXIT_FAILURE);
+    }
+
     int idx = 0;
     int distance = 999999;
     for (int i = 0; i < SS_BUILTIN_LEN; ++i) {
