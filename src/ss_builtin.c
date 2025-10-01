@@ -38,7 +38,6 @@ void ss_ls(void *arg) {
     while ((de = readdir(dir))) {
         char file_path[256];
         char file_type;
-        char *permissions;
         const char *file_name = de->d_name;
 
         snprintf(file_path, sizeof(file_path), "%s/%s", cwd, file_name);
